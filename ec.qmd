@@ -3,3 +3,42 @@ title: "Economic Connectedness"
 format: html
 ---
 
+```{r}
+#| echo: false
+#| warning: false
+library(tidyverse)
+library(ggplot2)
+library(primer.data)
+library(scales)  # For better axis formatting
+```
+
+```{r}
+#| echo: false
+#| warning: false
+ggplot(economics, aes(x = psavert)) +
+  geom_histogram(bins = 30, fill = "darkgreen", color = "white") +
+  labs(
+    title = "Histogram of Personal Savings Rate",
+    x = "Personal Savings Rate (%)",
+    y = "Number of Months"
+  )
+```
+
+```{r}
+#| echo: false
+#| warning: false
+ggplot(connectedness, aes(x = population, y = connectedness)) +
+  geom_point(alpha = 0.5, color = "#2c7fb8", size = 2) +
+  geom_smooth(method = "lm", color = "black", se = TRUE) +  # Line of best fit
+  scale_x_continuous(trans = "log10", labels = comma) +
+  labs(title = "County Connectedness by Population",
+       subtitle = "Larger populations tend to have higher connectedness scores",
+       x = "Population (log scale)",
+       y = "Connectedness Score",
+       caption = "Data from tidyverse dataset") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"),
+        panel.grid.minor = element_blank())
+
+```
+
